@@ -42,7 +42,7 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: './index.html',
+      template: './src/index.html',
       inject: true,
       filename: 'index.html',
       chunks: ['index'],
@@ -55,12 +55,8 @@ module.exports = {
       filename: '[name].css'
     }),
     new CopyWebpackPlugin([{
-      from:'./src/asset',
-      to:'asset'
-    }]),
-    // new webpack.ProvidePlugin({
-    //   $: 'jquery',
-    //   jQuery: 'jquery'
-    // })
+      from:'./src/assets',
+      to:'assets'
+    }])
   ]   
 };

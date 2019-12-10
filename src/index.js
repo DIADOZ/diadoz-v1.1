@@ -44,22 +44,22 @@ function createCamera() {
     0.1,
     1000
   );
-  camera.position.x = -2;
-  camera.position.y = 1.8;
+  camera.position.x = 0;
+  camera.position.y = 15;
   camera.position.z = 0;
 }
 
 function createLights() {
   const ambientLight = new THREE.HemisphereLight(0xfffff0, 5);
 
-  topLight = new THREE.PointLight(0xcd712c, 5, 100, 2);
-  topLight.castShadow = true;
+  topLight = new THREE.PointLight(0xcd712c, 5, 10, 2);
+  topLight.castShadow = false;
   topLight.position.x = 0;
-  topLight.position.y = 1;
+  topLight.position.y = 15;
   topLight.position.z = 0;
 
   bottomLight = new THREE.PointLight(0xcd712c, 1, 100, 2);
-  bottomLight.castShadow = true;
+  bottomLight.castShadow = false;
 
   scene.add(ambientLight, topLight, bottomLight);
 }
@@ -69,7 +69,7 @@ function loadModels() {
 
   // A reusable function to set up the models. Position parameter to move model
   const onLoad = (gltf, position) => {
-    model = gltf.scene.children[2];
+    model = gltf.scene.children[0];
     model.position.copy(position);
     model.castShadow = true;
 
@@ -84,7 +84,7 @@ function loadModels() {
   // model is loaded asynchronously,
   const atlasPosition = new THREE.Vector3(0, 0, 0);
   loader.load(
-    "./asset/model/diadoz-logo.glb",
+    "./assets/model/diadoz-logo.glb",
     gltf => onLoad(gltf, atlasPosition),
     onProgress,
     onError
@@ -96,9 +96,9 @@ function createControls() {
 //   controls.autoRotate = true;
 //   controls.autoRotateSpeed = 2;
 //   controls.enableZoom = false;
-//   controls.enableKeys = false;
-//   controls.enablePan = false;
-  // controls.maxPolarAngle = 1.6;
+  controls.enableKeys = false;
+  controls.enablePan = false;
+  controls.maxPolarAngle = 1.6;
 }
 
 function createRenderer() {
