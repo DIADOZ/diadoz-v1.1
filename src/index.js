@@ -14,7 +14,7 @@ let controls;
 let renderer;
 let scene;
 let model;
-let topLight, bottomLight;
+let topLight;
 
 const mixers = [];
 const clock = new THREE.Clock();
@@ -45,7 +45,7 @@ function createCamera() {
     1000
   );
   camera.position.x = 0;
-  camera.position.y = 15;
+  camera.position.y = 2;
   camera.position.z = 0;
 }
 
@@ -58,10 +58,7 @@ function createLights() {
   topLight.position.y = 15;
   topLight.position.z = 0;
 
-  bottomLight = new THREE.PointLight(0xcd712c, 1, 100, 2);
-  bottomLight.castShadow = false;
-
-  scene.add(ambientLight, topLight, bottomLight);
+  scene.add(ambientLight, topLight);
 }
 
 function loadModels() {
@@ -69,11 +66,13 @@ function loadModels() {
 
   // A reusable function to set up the models. Position parameter to move model
   const onLoad = (gltf, position) => {
+    console.log(dumpObject(gltf.scene).join('\n'));
     model = gltf.scene.children[0];
     model.position.copy(position);
     model.castShadow = true;
 
     scene.add(model);
+
   };
 
   const onProgress = () => {};
@@ -82,7 +81,7 @@ function loadModels() {
   };
 
   // model is loaded asynchronously,
-  const atlasPosition = new THREE.Vector3(0, 0, 0);
+  const atlasPosition = new THREE.Vector3(.1, 0, 0);
   loader.load(
     "./assets/model/diadoz-logo.glb",
     gltf => onLoad(gltf, atlasPosition),
@@ -103,9 +102,9 @@ function createControls() {
 
 function createRenderer() {
   // create a WebGLRenderer and set its width and height
-  renderer = new THREE.WebGLRenderer({ });
-//   renderer.setClearColor(new THREE.Color(0xff0000));
-//   renderer.setClearAlpha(0);
+  renderer = new THREE.WebGLRenderer({ alpha: 1 });
+  renderer.setClearColor(new THREE.Color(0xff0000));
+  renderer.setClearAlpha(0);
   renderer.setSize(container.clientWidth, container.clientHeight);
 
   renderer.setPixelRatio(window.devicePixelRatio);
@@ -119,10 +118,6 @@ function createRenderer() {
 function update() {
   const delta = clock.getDelta();
   var time = Date.now() * 0.0005;
-
-  bottomLight.position.x = (Math.sin(time * 0.7) * 20) / 100;
-  bottomLight.position.y = -0.5;
-  bottomLight.position.z = (Math.cos(time * 0.3) * 30) / 100;
 
   for (const mixer of mixers) {
     mixer.update(delta);
@@ -139,9 +134,31 @@ function onWindowResize() {
   // update the camera's frustum
   camera.updateProjectionMatrix();
 
-  renderer.setSize(container.clientWidth, container.clientHeight);
+  function resizeRendererToDisplaySize(renderer) {
+    const canvas = renderer.domElement;
+    const pixelRatio = window.devicePixelRatio;
+    const width  = canvas.clientWidth  * pixelRatio | 0;
+    const height = canvas.clientHeight * pixelRatio | 0;
+    const needResize = canvas.width !== width || canvas.height !== height;
+    if (needResize) {
+      renderer.setSize(width, height, false);
+    }
+    return needResize;
+  }
 }
 
 window.addEventListener("resize", onWindowResize);
 
 init();
+
+function dumpObject(obj, lines = [], isLast = true, prefix = '') {
+  const localPrefix = isLast ? '└─' : '├─';
+  lines.push(`${prefix}${prefix ? localPrefix : ''}${obj.name || '*no-name*'} [${obj.type}]`);
+  const newPrefix = prefix + (isLast ? '  ' : '│ ');
+  const lastNdx = obj.children.length - 1;
+  obj.children.forEach((child, ndx) => {
+    const isLast = ndx === lastNdx;
+    dumpObject(child, lines, isLast, newPrefix);
+  });
+  return lines;
+}
