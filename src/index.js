@@ -20,7 +20,7 @@ const mixers = [];
 const clock = new THREE.Clock();
 
 function init() {
-  container = document.querySelector("#scene-container");
+  container = document.querySelector("#scene");
 
   scene = new THREE.Scene();
 
@@ -45,7 +45,7 @@ function createCamera() {
     1000
   );
   camera.position.x = 0;
-  camera.position.y = 2;
+  camera.position.y = 15;
   camera.position.z = 0;
 }
 
@@ -66,13 +66,12 @@ function loadModels() {
 
   // A reusable function to set up the models. Position parameter to move model
   const onLoad = (gltf, position) => {
-    console.log(dumpObject(gltf.scene).join('\n'));
+    // console.log(dumpObject(gltf.scene).join('\n'));
     model = gltf.scene.children[0];
     model.position.copy(position);
     model.castShadow = true;
 
     scene.add(model);
-
   };
 
   const onProgress = () => {};
@@ -81,7 +80,7 @@ function loadModels() {
   };
 
   // model is loaded asynchronously,
-  const atlasPosition = new THREE.Vector3(.1, 0, 0);
+  const atlasPosition = new THREE.Vector3(0, 0, -2);
   loader.load(
     "./assets/model/diadoz-logo.glb",
     gltf => onLoad(gltf, atlasPosition),
@@ -94,7 +93,7 @@ function createControls() {
   controls = new OrbitControls(camera, container);
 //   controls.autoRotate = true;
 //   controls.autoRotateSpeed = 2;
-//   controls.enableZoom = false;
+  // controls.enableZoom = false;
   controls.enableKeys = false;
   controls.enablePan = false;
   controls.maxPolarAngle = 1.6;
@@ -102,7 +101,7 @@ function createControls() {
 
 function createRenderer() {
   // create a WebGLRenderer and set its width and height
-  renderer = new THREE.WebGLRenderer({ alpha: 1 });
+  renderer = new THREE.WebGLRenderer({ canvas: container, alpha: 1 });
   renderer.setClearColor(new THREE.Color(0xff0000));
   renderer.setClearAlpha(0);
   renderer.setSize(container.clientWidth, container.clientHeight);
@@ -111,8 +110,6 @@ function createRenderer() {
 
   renderer.gammaFactor = 2.2;
   renderer.gammaOutput = true;
-
-  container.appendChild(renderer.domElement);
 }
 
 function update() {
@@ -134,31 +131,33 @@ function onWindowResize() {
   // update the camera's frustum
   camera.updateProjectionMatrix();
 
-  function resizeRendererToDisplaySize(renderer) {
-    const canvas = renderer.domElement;
-    const pixelRatio = window.devicePixelRatio;
-    const width  = canvas.clientWidth  * pixelRatio | 0;
-    const height = canvas.clientHeight * pixelRatio | 0;
-    const needResize = canvas.width !== width || canvas.height !== height;
-    if (needResize) {
-      renderer.setSize(width, height, false);
-    }
-    return needResize;
-  }
+  // function resizeRendererToDisplaySize(renderer) {
+  //   const canvas = renderer.domElement;
+  //   const pixelRatio = window.devicePixelRatio;
+  //   const width  = canvas.clientWidth  * pixelRatio | 0;
+  //   const height = canvas.clientHeight * pixelRatio | 0;
+  //   const needResize = canvas.width !== width || canvas.height !== height;
+  //   if (needResize) {
+  //     renderer.setSize(width, height, false);
+  //   }
+  //   return needResize;
+  // }
+
+  renderer.setSize(container.clientWidth, container.clientHeight);
 }
 
 window.addEventListener("resize", onWindowResize);
 
 init();
 
-function dumpObject(obj, lines = [], isLast = true, prefix = '') {
-  const localPrefix = isLast ? '└─' : '├─';
-  lines.push(`${prefix}${prefix ? localPrefix : ''}${obj.name || '*no-name*'} [${obj.type}]`);
-  const newPrefix = prefix + (isLast ? '  ' : '│ ');
-  const lastNdx = obj.children.length - 1;
-  obj.children.forEach((child, ndx) => {
-    const isLast = ndx === lastNdx;
-    dumpObject(child, lines, isLast, newPrefix);
-  });
-  return lines;
-}
+// function dumpObject(obj, lines = [], isLast = true, prefix = '') {
+//   const localPrefix = isLast ? '└─' : '├─';
+//   lines.push(`${prefix}${prefix ? localPrefix : ''}${obj.name || '*no-name*'} [${obj.type}]`);
+//   const newPrefix = prefix + (isLast ? '  ' : '│ ');
+//   const lastNdx = obj.children.length - 1;
+//   obj.children.forEach((child, ndx) => {
+//     const isLast = ndx === lastNdx;
+//     dumpObject(child, lines, isLast, newPrefix);
+//   });
+//   return lines;
+// }
