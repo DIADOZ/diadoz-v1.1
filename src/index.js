@@ -1,6 +1,7 @@
 import 'normalize.css';
 import './index.css';
 
+
 // import "../app/init";
 // import './autoplay';
 
@@ -80,7 +81,7 @@ function loadModels() {
   };
 
   // model is loaded asynchronously,
-  const atlasPosition = new THREE.Vector3(0, 0, -2);
+  const atlasPosition = new THREE.Vector3(.02, 0, 0);
   loader.load(
     "./assets/model/diadoz-logo.glb",
     gltf => onLoad(gltf, atlasPosition),
