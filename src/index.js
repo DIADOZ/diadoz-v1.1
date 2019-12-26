@@ -92,9 +92,9 @@ function loadModels() {
 
 function createControls() {
   controls = new OrbitControls(camera, container);
-//   controls.autoRotate = true;
-//   controls.autoRotateSpeed = 2;
-  // controls.enableZoom = false;
+  // controls.autoRotate = true;
+  // controls.autoRotateSpeed = 2;
+  controls.enableZoom = false;
   controls.enableKeys = false;
   controls.enablePan = false;
   controls.maxPolarAngle = 1.6;

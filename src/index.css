@@ -39,11 +39,17 @@ html, body {
   align-items: center;
 }
 
+.input-row {
+  display: flex;
+}
+
 #submit {
   display: inline-block;
-  width: 22px;
-  height: 22px;
+  width: 30px;
+  height: 27px;
   background-color: var(--main-accent-color);
+  border-radius: 0px 3px 3px 0px;
+  box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
 }
 
 .justified {
@@ -83,14 +89,13 @@ html, body {
 
 input[type=text] {
   font-size: 1.5em;
-  height: 20px;
+  height: 23px;
   width: 220px;
   border: 1px var(--main-accent-color) solid;
   /* background-color: var(--main-accent-color); */
   color: var(--main-accent-color);
   box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
-  z-index: 1;
-  border-radius: 3px;
+  border-radius: 3px 0px 0px 3px;
 }
 
 #email-sign {
