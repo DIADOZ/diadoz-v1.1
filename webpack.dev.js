@@ -46,6 +46,10 @@ module.exports = {
       inject: true,
       filename: 'index.html',
       chunks: ['index'],
+      meta: {
+        charset: 'utf-8',
+        viewport: 'width=device-width, initial-scale=1, shrink-to-fit=no',
+      },
       minify: {
         removeComments: true,
         collapseWhitespace: false
