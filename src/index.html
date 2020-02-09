@@ -16,15 +16,22 @@
 				</p>
 			</div>
 			<div class="row float-50">
-				<label for="email-input" id="email-sign">
+				<label for="MERGE0" id="email-sign">
 					<p>We got some new stickers on the way, if you trying to get in on those enter that contact info right here!</p>
 					<div class="input-row">
-						<input id="email-input" type="email" placeholder="example@diadoz.com">
-						<span id="submit">
-							<i class="material-icons">
-								email
-							</i>
-						</span>
+						<form action="https://diadoz.us15.list-manage.com/subscribe/post" method="POST">
+							<input type="hidden" name="u" value="1914e11c66b8a2faa51e5ffb7">
+							<input type="hidden" name="id" value="42de988a7e">
+							<input id="email-input" name="MERGE0" type="email" placeholder="example@diadoz.com">
+							<!-- <input type="email" autocapitalize="off" autocorrect="off" name="MERGE0" id="MERGE0" size="25" value=""> -->
+							<button type="submit">
+								<span id="submit">
+									<i class="material-icons">
+										email
+									</i>
+								</span>
+							</button>
+						</form>
 					</div>
 				</label>
 			</div>
