@@ -4,10 +4,6 @@ import '@fortawesome/fontawesome-free/js/brands';
 import 'normalize.css';
 import './index.css';
 
-
-// import "../app/init";
-// import './autoplay';
-
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
@@ -116,18 +112,6 @@ function onWindowResize() {
   // update the camera's frustum
   camera.updateProjectionMatrix();
 
-  // function resizeRendererToDisplaySize(renderer) {
-  //   const canvas = renderer.domElement;
-  //   const pixelRatio = window.devicePixelRatio;
-  //   const width  = canvas.clientWidth  * pixelRatio | 0;
-  //   const height = canvas.clientHeight * pixelRatio | 0;
-  //   const needResize = canvas.width !== width || canvas.height !== height;
-  //   if (needResize) {
-  //     renderer.setSize(width, height, false);
-  //   }
-  //   return needResize;
-  // }
-
   renderer.setSize(container.clientWidth, container.clientHeight);
 }
 
@@ -150,15 +134,3 @@ export function start() {
 }
 
 window.addEventListener('resize', onWindowResize);
-
-// function dumpObject(obj, lines = [], isLast = true, prefix = '') {
-//   const localPrefix = isLast ? '└─' : '├─';
-//   lines.push(`${prefix}${prefix ? localPrefix : ''}${obj.name || '*no-name*'} [${obj.type}]`);
-//   const newPrefix = prefix + (isLast ? '  ' : '│ ');
-//   const lastNdx = obj.children.length - 1;
-//   obj.children.forEach((child, ndx) => {
-//     const isLast = ndx === lastNdx;
-//     dumpObject(child, lines, isLast, newPrefix);
-//   });
-//   return lines;
-// }

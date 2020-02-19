@@ -147,7 +147,7 @@ input[type=email]::placeholder {
 
 #caret {
   border-right: .05em solid;
-  animation: caret 1s steps(1) infinite;
+  animation: caret 1.5s steps(1) infinite;
 }
 
 @keyframes caret {
