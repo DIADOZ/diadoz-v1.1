@@ -144,3 +144,14 @@ input[type=email]::placeholder {
   justify-content: space-evenly;
   width: 50%;
 }
+
+#caret {
+  border-right: .05em solid;
+  animation: caret 1s steps(1) infinite;
+}
+
+@keyframes caret {
+  50% {
+    border-color: transparent;
+  }
+}

@@ -1,167 +1,59 @@
-import '@fortawesome/fontawesome-free/js/fontawesome'
-// import '@fortawesome/fontawesome-free/js/solid'
-import '@fortawesome/fontawesome-free/js/brands'
-import 'normalize.css';
-import './index.css';
+/* eslint-disable prefer-const */
+/* eslint-disable no-restricted-syntax */
+import { start } from './control';
 
+const text = 'New insights can develop into new approaches. Our insights and achievements over the last year have allowed us to find new directions, to better our approach, and to fine tune our output.';
 
-// import "../app/init";
-// import './autoplay';
+// type one text in the typwriter
+// keeps calling itself until the text is finished
+// function typeWriter(text, i, fnCallback) {
+//   // chekc if text isn't finished yet
+//   if (i < (text.length)) {
+//     // add next character to h1
 
-import * as THREE from 'three';
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
+//     // wait for a while and call this function again for next character
+//     setTimeout(function() {
+//       typeWriter(text, i + 1, fnCallback)
+//       }, 100);
+//   }
+//   else if (typeof fnCallback == 'function') {
+//     // call callback after timeout
+//     // text finished, call callback if there is a callback function
+//     setTimeout(fnCallback, 700);
+//   }
+// }
 
-let container;
-let camera;
-let controls;
-let renderer;
-let scene;
-let model;
-let topLight;
+function typingEffect(phrase, i) {
+  // check if text is done
+  // if text done return to be able to show elements
+  if (i < (phrase.length)) {
+    document.querySelector('#description').textContent = phrase.substring(0, i + 1);
+    setTimeout(() => {
+      typingEffect(phrase, i + 1);
+    }, 50); // make this random
+  }
+  // if text still
+  // could create a code like scene?
+  // take text and input it character by character
+  // blinking cursor "|" (3x?)
+  // begins typing
+  // taking pauses like a human would
+  // return true once done??
 
-const mixers = [];
-const clock = new THREE.Clock();
+  return false;
+}
+
+function start3D() {
+  start();
+}
 
 function init() {
-  container = document.querySelector("#scene");
-
-  scene = new THREE.Scene();
-
-  createCamera();
-  createLights();
-  loadModels();
-  createControls();
-  createRenderer();
-
-  renderer.setAnimationLoop(() => {
-    controls.update();
-    update();
-    render();
-  });
+  // start game
+  // start typing effect
+  typingEffect(text, 0);
+  // fade in elements
+  // 3d controls
+  start3D();
 }
-
-function createCamera() {
-  camera = new THREE.PerspectiveCamera(
-    45,
-    container.clientWidth / container.clientHeight,
-    0.1,
-    1000
-  );
-  camera.position.x = 0;
-  camera.position.y = 15;
-  camera.position.z = 0;
-}
-
-function createLights() {
-  const ambientLight = new THREE.HemisphereLight(0xfffff0, 5);
-
-  topLight = new THREE.PointLight(0xcd712c, 5, 10, 2);
-  topLight.castShadow = false;
-  topLight.position.x = 0;
-  topLight.position.y = 15;
-  topLight.position.z = 0;
-
-  scene.add(ambientLight, topLight);
-}
-
-function loadModels() {
-  const loader = new GLTFLoader();
-
-  // A reusable function to set up the models. Position parameter to move model
-  const onLoad = (gltf, position) => {
-    // console.log(dumpObject(gltf.scene).join('\n'));
-    model = gltf.scene.children[0];
-    model.position.copy(position);
-    model.castShadow = true;
-
-    scene.add(model);
-  };
-
-  const onProgress = () => {};
-  const onError = errorMessage => {
-    console.log(errorMessage);
-  };
-
-  // model is loaded asynchronously,
-  const atlasPosition = new THREE.Vector3(.02, 0, 0);
-  loader.load(
-    "./assets/model/diadoz-logo.glb",
-    gltf => onLoad(gltf, atlasPosition),
-    onProgress,
-    onError
-  );
-}
-
-function createControls() {
-  controls = new OrbitControls(camera, container);
-  // controls.autoRotate = true;
-  // controls.autoRotateSpeed = 2;
-  controls.enableZoom = false;
-  controls.enableKeys = false;
-  controls.enablePan = false;
-  controls.maxPolarAngle = 1.6;
-}
-
-function createRenderer() {
-  // create a WebGLRenderer and set its width and height
-  renderer = new THREE.WebGLRenderer({ canvas: container, alpha: 1 });
-  renderer.setClearColor(new THREE.Color(0xff0000));
-  renderer.setClearAlpha(0);
-  renderer.setSize(container.clientWidth, container.clientHeight);
-
-  renderer.setPixelRatio(window.devicePixelRatio);
-
-  renderer.gammaFactor = 2.2;
-  renderer.gammaOutput = true;
-}
-
-function update() {
-  const delta = clock.getDelta();
-  var time = Date.now() * 0.0005;
-
-  for (const mixer of mixers) {
-    mixer.update(delta);
-  }
-}
-
-function render() {
-  renderer.render(scene, camera);
-}
-
-function onWindowResize() {
-  camera.aspect = container.clientWidth / container.clientHeight;
-
-  // update the camera's frustum
-  camera.updateProjectionMatrix();
-
-  // function resizeRendererToDisplaySize(renderer) {
-  //   const canvas = renderer.domElement;
-  //   const pixelRatio = window.devicePixelRatio;
-  //   const width  = canvas.clientWidth  * pixelRatio | 0;
-  //   const height = canvas.clientHeight * pixelRatio | 0;
-  //   const needResize = canvas.width !== width || canvas.height !== height;
-  //   if (needResize) {
-  //     renderer.setSize(width, height, false);
-  //   }
-  //   return needResize;
-  // }
-
-  renderer.setSize(container.clientWidth, container.clientHeight);
-}
-
-window.addEventListener("resize", onWindowResize);
 
 init();
-
-// function dumpObject(obj, lines = [], isLast = true, prefix = '') {
-//   const localPrefix = isLast ? '└─' : '├─';
-//   lines.push(`${prefix}${prefix ? localPrefix : ''}${obj.name || '*no-name*'} [${obj.type}]`);
-//   const newPrefix = prefix + (isLast ? '  ' : '│ ');
-//   const lastNdx = obj.children.length - 1;
-//   obj.children.forEach((child, ndx) => {
-//     const isLast = ndx === lastNdx;
-//     dumpObject(child, lines, isLast, newPrefix);
-//   });
-//   return lines;
-// }
