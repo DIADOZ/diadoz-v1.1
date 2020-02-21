@@ -4,6 +4,13 @@ import { start } from './control';
 
 const text = 'New insights can develop into new approaches. Our insights and achievements over the last year have allowed us to find new directions, to better our approach, and to fine tune our output.';
 
+function gameInit(){
+  // 3d letters spread out floating and flying around
+  
+  // on click of letter it snaps to center
+  // once all letters have snapped return
+}
+
 function typingEffect(phrase, i) {
   // check if index is less than phrase length
   if (i < (phrase.length)) {

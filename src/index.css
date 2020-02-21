@@ -70,7 +70,9 @@ html, body {
   top: 8%;
 }
 
-
+.hide {
+  display: none;
+}
 
 .input-row {
   display: flex;
