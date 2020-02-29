@@ -24,9 +24,6 @@ const xMax = (frustumSize * aspect) / 2 - 0.1;
 const zMax = (frustumSize / 2) - 0.1;
 const zMin = (frustumSize / -2) + 0.1;
 
-const mixers = [];
-const clock = new THREE.Clock();
-
 export function start() {
   scene = new THREE.Scene();
 
@@ -93,7 +90,10 @@ function loadModels() {
     if (gltf.scene) {
       for (const item of gltf.scene.children) {
         // item.castShadow = true;
-        item.position.x = randomNumber((frustumSize * aspect + 0.1) / -2, (frustumSize * aspect) / 2 - 0.1);
+        item.position.x = randomNumber(
+          (frustumSize * aspect + 0.1) / -2,
+          (frustumSize * aspect) / 2 - 0.1,
+        );
         item.position.z = randomNumber((frustumSize / 2) - 0.1, (frustumSize / -2) + 0.1);
         models[item.name] = item;
       }
@@ -128,28 +128,27 @@ function onWindowResize() {
   renderer.setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
 }
 
-function runModel(currentPosition, previousPosition) {
+function runModel(current) {
+  const currentPosition = current;
   const nextPosition = {};
 
   if (currentPosition.x < xMin) {
-    nextPosition.x = currentPosition.x++;
+    nextPosition.x = ++currentPosition.x;
   } else if (currentPosition.x > xMax) {
-    nextPosition.x = currentPosition.x--;
+    nextPosition.x = --currentPosition.x;
   } else {
     // check where it was previously vs now and continue adding the same way
     nextPosition.x = ++currentPosition.x;
   }
 
   if (currentPosition.z < zMin) {
-    nextPosition.z = currentPosition.z++;
+    nextPosition.z = ++currentPosition.z;
   } else if (currentPosition.z > zMax) {
-    nextPosition.z = currentPosition.z--;
+    nextPosition.z = --currentPosition.z;
   } else {
     // check where it was previously vs now and continue adding the same way
-    
     nextPosition.z = ++currentPosition.z;
   }
-
 
   return nextPosition;
 }
@@ -157,86 +156,3 @@ function runModel(currentPosition, previousPosition) {
 function randomNumber(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
-
-
-// container = document.querySelector('#scene');
-
-//   scene = new THREE.Scene();
-
-//   createCamera();
-//   createLights();
-//   loadModels();
-//   createControls();
-//   createRenderer();
-
-//   window.addEventListener('resize', onWindowResize);
-
-//   renderer.setAnimationLoop(() => {
-//     controls.update();
-//     update();
-//     render();
-//   });
-// }
-
-// function createCamera() {
-//   // left, right, top, bottom, near, far
-//   camera = new THREE.PerspectiveCamera(
-//     45,
-//     container.clientWidth / container.clientHeight,
-//     0.1,
-//     1000,
-//   );
-//   camera.position.x = 0;
-//   camera.position.y = 15;
-//   camera.position.z = 0;
-// }
-
-
-// // function dumpObject(obj, lines = [], isLast = true, prefix = '') {
-// //   const localPrefix = isLast ? '└─' : '├─';
-// //   lines.push(`${prefix}${prefix ? localPrefix : ''}${obj.name || '*no-name*'} [${obj.type}]`);
-// //   const newPrefix = prefix + (isLast ? '  ' : '│ ');
-// //   const lastNdx = obj.children.length - 1;
-// //   obj.children.forEach((child, ndx) => {
-// //     const isLast = ndx === lastNdx;
-// //     dumpObject(child, lines, isLast, newPrefix);
-// //   });
-// //   return lines;
-// // }
-
-// export
-
-// function createControls() {
-//   controls = new OrbitControls(camera, container);
-//   // controls.autoRotate = true;
-//   // controls.autoRotateSpeed = 2;
-//   controls.enableZoom = true;
-//   controls.enableKeys = false;
-//   controls.enablePan = false;
-//   controls.maxPolarAngle = 1.6;
-// }
-
-// function createRenderer() {
-//   // create a WebGLRenderer and set its width and height
-//   renderer = new THREE.WebGLRenderer({ canvas: container, alpha: 1 });
-//   renderer.setClearColor(new THREE.Color(0xff0000));
-//   renderer.setClearAlpha(0);
-//   renderer.setSize(container.clientWidth, container.clientHeight);
-
-//   renderer.setPixelRatio(window.devicePixelRatio);
-
-//   renderer.gammaFactor = 2.2;
-//   renderer.gammaOutput = true;
-// }
-
-// function update() {
-//   const delta = clock.getDelta();
-
-//   mixers.forEach((mixer) => {
-//     mixer.update(delta);
-//   });
-// }
-
-// function render() {
-//   renderer.render(scene, camera);
-// }
