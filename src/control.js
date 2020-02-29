@@ -17,7 +17,12 @@ let topLight;
 const SCREEN_WIDTH = window.innerWidth;
 const SCREEN_HEIGHT = window.innerHeight;
 const aspect = SCREEN_WIDTH / SCREEN_HEIGHT;
-const frustumSize = 30;
+const frustumSize = 20;
+
+const xMin = (frustumSize * aspect + 0.1) / -2;
+const xMax = (frustumSize * aspect) / 2 - 0.1;
+const zMax = (frustumSize / 2) - 0.1;
+const zMin = (frustumSize / -2) + 0.1;
 
 const mixers = [];
 const clock = new THREE.Clock();
@@ -58,9 +63,10 @@ export function start() {
 function animate() {
   requestAnimationFrame(animate);
 
-  for (const model in models) {
-    models[model].position.x = randomNumber((frustumSize * aspect) / -2, (frustumSize * aspect) / 2);
-    models[model].position.z = randomNumber(frustumSize / 2, frustumSize / -2);
+  for (const item in models) {
+    const { x, z } = runModel({ x: models[item].position.x, z: models[item].position.z });
+    models[item].position.x = x;
+    models[item].position.z = z;
   }
 
   renderer.render(scene, camera);
@@ -87,6 +93,8 @@ function loadModels() {
     if (gltf.scene) {
       for (const item of gltf.scene.children) {
         // item.castShadow = true;
+        item.position.x = randomNumber((frustumSize * aspect + 0.1) / -2, (frustumSize * aspect) / 2 - 0.1);
+        item.position.z = randomNumber((frustumSize / 2) - 0.1, (frustumSize / -2) + 0.1);
         models[item.name] = item;
       }
     }
@@ -118,6 +126,32 @@ function onWindowResize() {
   camera.updateProjectionMatrix();
 
   renderer.setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
+}
+
+function runModel(currentPosition, previousPosition) {
+  const nextPosition = {};
+
+  if (currentPosition.x < xMin) {
+    nextPosition.x = currentPosition.x++;
+  } else if (currentPosition.x > xMax) {
+    nextPosition.x = currentPosition.x--;
+  } else {
+    // check where it was previously vs now and continue adding the same way
+    nextPosition.x = ++currentPosition.x;
+  }
+
+  if (currentPosition.z < zMin) {
+    nextPosition.z = currentPosition.z++;
+  } else if (currentPosition.z > zMax) {
+    nextPosition.z = currentPosition.z--;
+  } else {
+    // check where it was previously vs now and continue adding the same way
+    
+    nextPosition.z = ++currentPosition.z;
+  }
+
+
+  return nextPosition;
 }
 
 function randomNumber(min, max) {
