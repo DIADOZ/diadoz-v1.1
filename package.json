@@ -11,6 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@tweenjs/tween.js": "^18.5.0",
     "lodash": "^4.17.15",
     "normalize.css": "^8.0.1",
     "three": "^0.111.0"

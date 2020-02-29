@@ -5,6 +5,7 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
+import TWEEN from '@tweenjs/tween.js';
 
 let container;
 let camera;
@@ -19,23 +20,43 @@ const SCREEN_HEIGHT = window.innerHeight;
 const aspect = SCREEN_WIDTH / SCREEN_HEIGHT;
 const frustumSize = 20;
 
-const xMin = (frustumSize * aspect + 0.1) / -2;
-const xMax = (frustumSize * aspect) / 2 - 0.1;
-const zMax = (frustumSize / 2) - 0.1;
-const zMin = (frustumSize / -2) + 0.1;
+const xMin = (frustumSize * aspect) / -2;
+const xMax = (frustumSize * aspect) / 2;
+const zMax = (frustumSize / 2);
+const zMin = (frustumSize / -2);
+
+function getRandomPositions(min, max) {
+  const positions = [];
+  for (let i = 0; i < 100; i++) {
+    positions.push(getRandomInt(min, max));
+  }
+  return positions;
+}
+
+function getRandomInt(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
 
 export function start() {
   scene = new THREE.Scene();
 
   camera = new THREE.OrthographicCamera(
-    (frustumSize * aspect) / -2,
-    (frustumSize * aspect) / 2,
-    frustumSize / 2,
-    frustumSize / -2,
+    xMin,
+    xMax,
+    zMax,
+    zMin,
     0.1,
     1000,
   );
-  camera.position.y = 30;
+
+  // new THREE.PerspectiveCamera(
+  //   45,
+  //   aspect,
+  //   0.1,
+  //   1000,
+  // );
+
+  camera.position.y = 15;
 
   const axesHelper = new THREE.AxesHelper(5);
   scene.add(axesHelper);
@@ -60,11 +81,10 @@ export function start() {
 function animate() {
   requestAnimationFrame(animate);
 
-  for (const item in models) {
-    const { x, z } = runModel({ x: models[item].position.x, z: models[item].position.z });
-    models[item].position.x = x;
-    models[item].position.z = z;
-  }
+  // for (const item in models) {
+  //   runModel(models[item]);
+  // }
+  TWEEN.update();
 
   renderer.render(scene, camera);
 }
@@ -90,16 +110,21 @@ function loadModels() {
     if (gltf.scene) {
       for (const item of gltf.scene.children) {
         // item.castShadow = true;
-        item.position.x = randomNumber(
-          (frustumSize * aspect + 0.1) / -2,
-          (frustumSize * aspect) / 2 - 0.1,
-        );
-        item.position.z = randomNumber((frustumSize / 2) - 0.1, (frustumSize / -2) + 0.1);
+        item.position.x = getRandomInt(xMin, xMax);
+        item.position.z = getRandomInt(zMax, zMin);
         models[item.name] = item;
       }
     }
     for (const item in models) {
       scene.add(models[item]);
+
+      new TWEEN.Tween(models[item].position)
+        .to({
+          x: getRandomPositions(xMin, xMax),
+          z: getRandomPositions(zMax, zMin),
+        }, 100000)
+        .repeat(Infinity)
+        .start();
     }
   };
   const onProgress = (xhr) => {
@@ -123,36 +148,7 @@ function onWindowResize() {
   camera.aspect = aspect;
 
   // update the camera's frustum
-  camera.updateProjectionMatrix();
+  // camera.updateProjectionMatrix();
 
   renderer.setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
-}
-
-function runModel(current) {
-  const currentPosition = current;
-  const nextPosition = {};
-
-  if (currentPosition.x < xMin) {
-    nextPosition.x = ++currentPosition.x;
-  } else if (currentPosition.x > xMax) {
-    nextPosition.x = --currentPosition.x;
-  } else {
-    // check where it was previously vs now and continue adding the same way
-    nextPosition.x = ++currentPosition.x;
-  }
-
-  if (currentPosition.z < zMin) {
-    nextPosition.z = ++currentPosition.z;
-  } else if (currentPosition.z > zMax) {
-    nextPosition.z = --currentPosition.z;
-  } else {
-    // check where it was previously vs now and continue adding the same way
-    nextPosition.z = ++currentPosition.z;
-  }
-
-  return nextPosition;
-}
-
-function randomNumber(min, max) {
-  return Math.floor(Math.random() * (max - min + 1)) + min;
 }
