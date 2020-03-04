@@ -20,9 +20,6 @@ function start3D() {
     const warning = WEBGL.getWebGLErrorMessage();
     document.querySelector('#container').appendChild(warning);
   }
-  // 3d letters spread out floating and flying around
-  // load models, create movement,
-  // create on click snap to center,
   // create transition out once all letters clicked
 }
 
@@ -39,11 +36,20 @@ function typingEffect(phrase, i) {
   return false;
 }
 
+export function fadeIn () {
+  let allHiddenComponents = document.querySelectorAll("#container .hide");
+  allHiddenComponents.forEach((component)=>{
+    component.classList.remove("hide");
+  });
+
+  typingEffect(text, 0);
+}
+
 function init() {
   // start game
   start3D();
   // start typing effect
-  typingEffect(text, 0);
+  
   // fade in elements
 }
 
