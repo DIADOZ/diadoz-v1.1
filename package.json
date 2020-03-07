@@ -6,7 +6,8 @@
   "scripts": {
     "start": "webpack-dev-server --config webpack.dev.js --mode development",
     "build": "webpack --config webpack.prod.js --mode production",
-    "preview": "npm run build && http-server dist"
+    "preview": "npm run build && http-server dist",
+    "lint": "eslint --fix . && echo 'Lint complete.'"
   },
   "author": "",
   "license": "ISC",
@@ -27,12 +28,15 @@
     "css-loader": "^3.2.0",
     "eslint": "^6.8.0",
     "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-config-prettier": "^6.10.0",
     "eslint-plugin-import": "^2.20.1",
+    "eslint-plugin-prettier": "^3.1.2",
     "html-webpack-plugin": "^3.2.0",
     "http-server": "^0.12.0",
     "image-webpack-loader": "^6.0.0",
     "mini-css-extract-plugin": "^0.8.0",
     "optimize-css-assets-webpack-plugin": "^5.0.3",
+    "prettier": "^1.19.1",
     "style-loader": "^1.0.0",
     "terser-webpack-plugin": "^2.2.1",
     "uglifyjs-webpack-plugin": "^2.2.0",

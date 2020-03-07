@@ -1,4 +1,3 @@
-const webpack = require('webpack');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
@@ -8,7 +7,7 @@ module.exports = {
   mode: 'development',
   devtool: 'inline-source-map',
   entry: {
-    index: './src/index.js',
+    index: './src/index.js'
   },
   output: {
     filename: '[name].bundle.js',
@@ -25,18 +24,13 @@ module.exports = {
         use: {
           loader: 'babel-loader',
           options: {
-            presets: [
-              '@babel/preset-env'
-            ]
+            presets: ['@babel/preset-env']
           }
         }
       },
       {
-        test:  /\.css$/,
-        use: [
-          'style-loader',
-          'css-loader'
-        ]
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader']
       }
     ]
   },
@@ -48,7 +42,7 @@ module.exports = {
       chunks: ['index'],
       meta: {
         charset: 'utf-8',
-        viewport: 'width=device-width, initial-scale=1, shrink-to-fit=no',
+        viewport: 'width=device-width, initial-scale=1, shrink-to-fit=no'
       },
       minify: {
         removeComments: true,
@@ -58,9 +52,11 @@ module.exports = {
     new MiniCssExtractPlugin({
       filename: '[name].css'
     }),
-    new CopyWebpackPlugin([{
-      from:'./src/assets',
-      to:'assets'
-    }])
-  ]   
+    new CopyWebpackPlugin([
+      {
+        from: './src/assets',
+        to: 'assets'
+      }
+    ])
+  ]
 };
