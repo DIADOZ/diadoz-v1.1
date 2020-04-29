@@ -11,7 +11,7 @@ const text =
 
 function start3D() {
   if (WEBGL.isWebGLAvailable()) {
-    start();
+    fadeIn();
   } else {
     const warning = WEBGL.getWebGLErrorMessage();
     document.querySelector('#container').appendChild(warning);
