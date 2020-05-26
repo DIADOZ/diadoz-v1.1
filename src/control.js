@@ -12,11 +12,13 @@ const models = [];
 let modelGroup;
 let savedPositions = {};
 
+// Mutable variables
 const SCREEN_WIDTH = window.innerWidth;
-const SCREEN_HEIGHT = window.innerHeight;
-const aspect = SCREEN_WIDTH / SCREEN_HEIGHT;
-const frustumSize = 10;
+const SCREEN_HEIGHT = 170;
+const frustumSize = 3;
+// -----------------------
 
+const aspect = SCREEN_WIDTH / SCREEN_HEIGHT;
 const xMin = (frustumSize * aspect) / -2;
 const xMax = (frustumSize * aspect) / 2;
 const zMax = frustumSize / 2;
@@ -34,14 +36,14 @@ export function start() {
   //   1000,
   // );
 
-  camera.position.y = 30;
+  camera.position.y = 5;
   camera.lookAt(scene.position);
 
   renderer = new THREE.WebGLRenderer({ alpha: 1 });
   renderer.setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
   renderer.setPixelRatio(window.devicePixelRatio);
 
-  container = document.querySelector('#container');
+  container = document.querySelector('.logo-container');
   container.appendChild(renderer.domElement);
   container.addEventListener('click', snapModel);
 
@@ -73,8 +75,8 @@ function loadModels() {
       }
     }
     scene.add(modelGroup);
-    createTweens();
-    startTween('tween1');
+    // createTweens();
+    // startTween('tween1');
   };
   const onProgress = xhr => {
     console.log(`${(xhr.loaded / xhr.total) * 100}% loaded`);

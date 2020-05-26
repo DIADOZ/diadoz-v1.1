@@ -11,7 +11,7 @@ const text =
 
 function start3D() {
   if (WEBGL.isWebGLAvailable()) {
-    fadeIn();
+    start();
   } else {
     const warning = WEBGL.getWebGLErrorMessage();
     document.querySelector('#container').appendChild(warning);
@@ -37,10 +37,11 @@ export function fadeIn() {
     component.classList.remove('hide');
   });
 
-  typingEffect(text, 0);
+  // typingEffect(text, 0);
 }
 
 function init() {
+  typingEffect(text, 0);
   start3D();
 }
 
