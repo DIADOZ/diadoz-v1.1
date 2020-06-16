@@ -26,15 +26,8 @@ const zMin = frustumSize / -2;
 
 export function start() {
   scene = new THREE.Scene();
-
   camera = new THREE.OrthographicCamera(xMin, xMax, zMax, zMin, 0.1, 1000);
-
-  // new THREE.PerspectiveCamera(
-  //   75,
-  //   aspect,
-  //   0.1,
-  //   1000,
-  // );
+  // camera = new THREE.PerspectiveCamera(75, aspect, 0.1, 1000);
 
   camera.position.y = 5;
   camera.lookAt(scene.position);

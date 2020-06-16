@@ -38,9 +38,6 @@ html, body {
   text-align: center;
 }
 
-.email-container {
-}
-
 .message-container {
   padding-top: 15px;
 }
@@ -104,31 +101,36 @@ html, body {
   display: flex;
   width: 30px;
   height: 25px;
-  background-color: var(--main-text-color);
-  border: 0px;
-  border-radius: 0px 3px 3px 0px;
+  background-color: var(--main-bg-color);
+  border: solid var(--main-text-color);
+  border-width: 0px 0px 1px 0px;
   align-items: center;
   justify-content: center;
+  float: right;
+  padding-right: 10px;
 }
 
 #submit i {
-  color: var(--main-accent-color);
-  font-size: 2em;
+  color: var(--main-text-color);
+  font-size: 4em;
+  z-index: 2;
 }
 
 input[type=email] {
-  font-size: 1.5em;
+  font-size: 2em;
   height: 23px;
-  width: 220px;
-  border: 0px;
-  background-color: var(--main-text-color);
-  color: var(--main-accent-color);
-  border-radius: 3px 0px 0px 3px;
-  padding-left: 5px;
+  width: 180px;
+  border: solid var(--main-text-color);
+  border-width: 0px 0px 1px 0px;
+  background-color: var(--main-bg-color);
+  /* color: var(--main-accent-color);
+  border-radius: 3px 0px 0px 3px; */
+  padding-left: 10px;
 }
 
-input[type=email]::placeholder {
-  color: rgba(70, 73, 76, 0.83);
+input[type=email], input[type=email]::placeholder {
+  font-family: 'VT323', monospace; 
+  color: var(--main-text-color);
 }
 
 #email-sign {
@@ -174,8 +176,8 @@ input[type=email]::placeholder {
   font-size: 1.5em;
 }
 
-#socials a,a:hover,a:visited,a:active {
-  color: white;
+#socials a, a:hover, a:visited, a:active {
+  color: blue;
 }
 
 #caret {

@@ -12,6 +12,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@material/textfield": "^6.0.0",
     "@tweenjs/tween.js": "^18.5.0",
     "lodash": "^4.17.15",
     "normalize.css": "^8.0.1",
@@ -37,10 +38,12 @@
     "mini-css-extract-plugin": "^0.8.0",
     "optimize-css-assets-webpack-plugin": "^5.0.3",
     "prettier": "^1.19.1",
+    "sass-loader": "^8.0.2",
+    "sass": "^1.26.8",
     "style-loader": "^1.0.0",
     "terser-webpack-plugin": "^2.2.1",
     "uglifyjs-webpack-plugin": "^2.2.0",
-    "webpack": "^4.41.2",
+    "webpack": "^4.43.0",
     "webpack-cli": "^3.3.10",
     "webpack-dev-server": "^3.9.0"
   }
