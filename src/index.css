@@ -30,7 +30,7 @@ html, body {
   height: 200px; */
 }
 
-.socials-container {
+.links-container {
   height: 60px;
   display: flex;
   flex-direction: row;
@@ -42,7 +42,7 @@ html, body {
   padding-top: 15px;
 }
 
-.socials-container > a {
+.links-container > a {
   height: 60px;
   width: 60px;
 }
