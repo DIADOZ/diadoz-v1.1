@@ -1,10 +1,8 @@
 import '@fortawesome/fontawesome-free/js/fontawesome';
 import '@fortawesome/fontawesome-free/js/brands';
-import { MDCTextField } from '@material/textfield';
 import 'normalize.css';
 import './index.css';
 import { WEBGL } from 'three/examples/jsm/WebGL';
-
 
 import { start } from './control';
 

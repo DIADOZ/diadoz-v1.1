@@ -5,33 +5,47 @@
 		<link href="https://fonts.googleapis.com/css?family=VT323&display=swap" rel="stylesheet"> 
 		<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
 			rel="stylesheet">
+			<link rel="stylesheet" href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css">
 			
 		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
 	</head>
 	<body>
+		
 		<div id="container">
 			<div class="logo-container"></div>
 			<div class="links-container">
-				<a href="https://shop.diadoz.com" target="_blank">
-					<i class="material-icons md-60">
-						shopping_basket
-					</i>
-				</a>
-				<a href="https://archive.diadoz.com" target="_blank">
-					<i class="material-icons md-60">
-						archive
-					</i>
-				</a>
-				<a href="https://socials.diadoz.com" target="_blank">
-					<i class="material-icons md-60">
-						public
-					</i>
-				</a>
-				<a href="https://splash.diadoz.com" target="_blank">
-					<i class="material-icons md-60">
-						waves
-					</i>
-				</a>
+				<span>
+					<a class="icon-link" href="https://shop.diadoz.com" target="_blank">
+						<i class="material-icons md-60">
+							shopping_basket
+						</i>
+					</a>
+					<span class="icon-text">shop</span>
+				</span>
+				<span>
+					<a class="icon-link" href="https://archive.diadoz.com" target="_blank">
+						<i class="material-icons md-60">
+							archive
+						</i>
+					</a>
+					<span class="icon-text">archive</span>
+				</span>
+				<span>
+					<a class="icon-link" href="https://socials.diadoz.com" target="_blank">
+						<i class="material-icons md-60">
+							public
+						</i>
+					</a>
+					<span class="icon-text">socials</span>
+				</span>
+				<span>
+					<a class="icon-link" href="https://splash.diadoz.com" target="_blank">
+						<i class="material-icons md-60">
+							waves
+						</i>
+					</a>
+					<span class="icon-text">splash</span>
+				</span>
 			</div>
 			<div class="message-container">
 				<p id="description"></p>
@@ -42,22 +56,22 @@
 						<form action="https://diadoz.us15.list-manage.com/subscribe/post" method="POST">
 							<input type="hidden" name="u" value="1914e11c66b8a2faa51e5ffb7">
 							<input type="hidden" name="id" value="42de988a7e">
-							<input id="email-input" name="MERGE0" type="email" placeholder="example@diadoz.com">
+							<label class="mdc-text-field mdc-text-field--filled mdc-text-field--with-trailing-icon">
+								<input class="mdc-text-field__input" type="text" aria-labelledby="my-label-id">
+								<i class="material-icons mdc-text-field__icon mdc-text-field__icon--trailing" tabindex="0" role="button">email</i>
+								<span class="mdc-floating-label" id="my-label-id">Email</span>
+								<div class="mdc-line-ripple"></div>
+							</label>
+							<!-- <input id="email-input" name="MERGE0" type="email" placeholder="example@diadoz.com"> -->
 							<!-- <input type="email" autocapitalize="off" autocorrect="off" name="MERGE0" id="MERGE0" size="25" value=""> -->
-							<span id="submit">
+							<!-- <span id="submit">
 								<i class="material-icons">
 									email
 								</i>
-							</span>
+							</span> -->
 						</form>
 					</div>
 				</div>
-				<!-- <label class="mdc-text-field mdc-text-field--filled">
-					<span class="mdc-text-field__ripple"></span>
-					<input class="mdc-text-field__input" type="text" aria-labelledby="my-label-id">
-					<span class="mdc-floating-label" id="my-label-id">Hint text</span>
-					<span class="mdc-line-ripple"></span>
-				</label> -->
 			</div>
 			<div class="footer-container">
 				<a href="https://twitter.com/diadozofficial" target="_blank">
@@ -75,22 +89,8 @@
 			</div>
 		</div>
 	</body>
+	<script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
+	<script>
+		mdc.textField.MDCTextField.attachTo(document.querySelector('.mdc-text-field'));
+	</script>
 </html>
-
-
-
-<!-- <span class="justified letter-space">New insights can <span class="justified-more">develop</span> into new approache<span class="justified-more">s.</span></span><br> <span class="justified">Our insights and achievements over the last year have allowed us to find new directions, to better our approach, and to fine tune our output.</span> -->
-					<!-- <div id="socials">
-						<a href="https://twitter.com/diadozofficial" target="_blank">
-							<i class="fab fa-twitter"></i>
-						</a>
-						<a href="https://www.facebook.com/diadoz/" target="_blank">
-							<i class="fab fa-facebook-f"></i>
-						</a>
-						<a href="https://www.instagram.com/diadoz_" target="_blank">
-							<i class="fab fa-instagram"></i>
-						</a>
-						<a href="https://www.youtube.com/channel/UC9n6SV0C0qezMLUnwhJBrxA" target="_blank">
-							<i class="fab fa-youtube"></i>
-						</a>
-					</div> -->
